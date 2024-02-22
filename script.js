@@ -10,3 +10,16 @@ const tasksContainer = document.getElementById("tasks-container");
 const titleInput = document.getElementById("title-input");
 const dateInput = document.getElementById("date-input");
 const descriptionInput = document.getElementById("description-input");
+
+/* 
+Setup an array to store all tasks and their associated data (title, due date, description).
+This storage enables task tracking, display on the UI, and saving to localStorage.
+*/
+const taskData = [
+
+];
+
+// Setup an object to track the state when editing and discarding tasks.
+let currentTask = {
+
+};
