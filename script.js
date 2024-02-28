@@ -52,8 +52,13 @@ openTaskFormBtn.addEventListener("click", () => {
 
 // Event listener for the "Close" X button to display the dialog box on UI.
 closeTaskFormBtn.addEventListener("click", () => {
-    //Display modal dialog box element (confirmCloseDialog) on the UI..
-    confirmCloseDialog.showModal(); // This dialog contains options to cancel or discard.
+    const formInputsContainValues = titleInput.value || dateInput.value || descriptionInput.value;
+    if (formInputsContainValues) {  // check if formInputsContainValues is equal to true.
+        //Display modal dialog box element (confirmCloseDialog) on the UI
+        confirmCloseDialog.showModal(); // This dialog contains options to cancel or discard.
+    } else { // if the if statement is not true, meaning no changes in input field.
+        reset(); // call reset fucntion to clear input field, and close hide form modal.
+    }
 })
 
 //Event listener for cancel option/button on modal dialog box.
@@ -66,8 +71,9 @@ cancelBtn.addEventListener("click", () => {
 discardBtn.addEventListener("click", () => {
     ////Close the modal dialog box element.
     confirmCloseDialog.close();
-    // Toggles the "hidden" class on the taskForm element to hide the form modal.
-    taskForm.classList.toggle("hidden");
+    /*call reset fucntion to clear input fields
+    and hide form modal*/
+    reset();
 })
 
 //Event listener for submit button "Add Task", submit inputs to taskData array and display to UI.
