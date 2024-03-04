@@ -53,7 +53,9 @@ const addOrUpdateTask = () => {
 
 //Fucntion to add the task to the DOM
 const updateTaskContainer = () => {
-    // First clear out existing content of taskContainer before adding new tasks. 
+    
+    /*Fix duplication issue of previous task, when adding tasks,
+    clear out existing content of taskContainer, by setting innerHTML back to an empty string*/ 
     tasksContainer.innerHTML = "";
     //Display the task by looping throught it
     // Use forEach method on taskData, then destructure id, title, date, description as the parameters 
