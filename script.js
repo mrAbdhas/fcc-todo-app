@@ -79,7 +79,19 @@ const updateTaskContainer = () => {
     )
 }
 
-
+//deleteTask function, that will handle deleting tasks.
+const deleteTask = (buttonEl) => {
+    // find the index of the tasks to be deleted.
+    const dataArrIndex = taskData.findIndex((item) => item.id === buttonEl.parentElement.id);
+    //remove parrentElement of buttonEl from the DOM.
+    buttonEl.parentElement.remove();
+     /*splice is array method, takes up to 3 arguments,
+    1 manadtory arg. specifies which index to start,
+    2nd arg. is number of items to remove
+    3rd is optional replacement element*/
+    //Remove 1 tasks from taskData array.
+    taskData.splice(dataArrIndex, 1);
+}
 
 //function to clear input fields, after creating a task.
 const reset = () => {
