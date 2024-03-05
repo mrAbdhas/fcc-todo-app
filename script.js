@@ -43,6 +43,8 @@ const addOrUpdateTask = () => {
     if(dataArrIndex === -1) { // the condition, check if dataArrIndex is stricly equals to -1, meaning no matching id.
         //Add taskObj object to the begining of taskData array.
         taskData.unshift(taskObj);
+    } else {
+        taskData[dataArrIndex] = taskObj; // else set a task with the index [dataArrIndex] to taskObj.
     }
 
     //call updateTaskContainer to add task to the DOM. 
@@ -91,6 +93,26 @@ const deleteTask = (buttonEl) => {
     3rd is optional replacement element*/
     //Remove 1 tasks from taskData array.
     taskData.splice(dataArrIndex, 1);
+}
+
+//editTask function, that will handle editing tasks.
+const editTask = (buttonEl) => {
+    // find the index of the tasks to be edited.
+    const dataArrIndex = taskData.findIndex((item) => item.id === buttonEl.parentElement.id);
+    // Retrive the task to be edited and assign it to currentTask object, to keep track of it.
+    currentTask = taskData[dataArrIndex];
+    /*The task to be edited is now in the currentTask object
+    Stage it, for editing inside input fields.*/
+    titleInput.value = currentTask.title;
+    dateInput.value = currentTask.date;
+    descriptionInput.value = currentTask.description;
+    // Set the Text of addOrUpdateTaskBtn button to "Update Task".
+    addOrUpdateTaskBtn.innerHTML = "Update Task";
+    //Display form modal with the values of the input fields to be updated.
+    taskForm.classList.toggle("hidden");
+    /*Lastly to make the editing functional, so it reflect when you submit the task
+    create and else block in the if statement inside addOrUpdateTask function
+    and set taskData[dataArrIndex] to taskObj */
 }
 
 //function to clear input fields, after creating a task.
