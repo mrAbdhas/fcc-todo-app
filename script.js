@@ -145,7 +145,9 @@ openTaskFormBtn.addEventListener("click", () => {
 // Event listener for the "Close" X button to display the dialog box on UI.
 closeTaskFormBtn.addEventListener("click", () => {
     const formInputsContainValues = titleInput.value || dateInput.value || descriptionInput.value;
-    if (formInputsContainValues) {  // check if formInputsContainValues is equal to true.
+    //if the the values in the input fields are not equal to/exist in currentTask object, meaning no changes to tasks, return false and save in variable.
+    const formInputValuesUpdated = titleInput.value !== currentTask.title || dateInput.value !== currentTask.date || descriptionInput.value !== currentTask.description;
+    if (formInputsContainValues && formInputValuesUpdated) {  // check if formInputsContainValues or formInputValuesUpdated is equal to true.
         //Display modal dialog box element (confirmCloseDialog) on the UI
         confirmCloseDialog.showModal(); // This dialog contains options to cancel or discard.
     } else { // if the if statement is not true, meaning no changes in input field.
