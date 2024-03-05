@@ -26,6 +26,8 @@ let currentTask = {
 
 //Function to add or update the input values to taskData array.
 const addOrUpdateTask = () => {
+    //set button text to Add task.
+    addOrUpdateTaskBtn.innerText = "Add Task";
     //Determine whether the task exist in taskData array
     /* findIndex array method call on taskData finds and returns the index of the first
     element that meets the criteria specified by a provied testing funtion, if not, 
@@ -107,7 +109,7 @@ const editTask = (buttonEl) => {
     dateInput.value = currentTask.date;
     descriptionInput.value = currentTask.description;
     // Set the Text of addOrUpdateTaskBtn button to "Update Task".
-    addOrUpdateTaskBtn.innerHTML = "Update Task";
+    addOrUpdateTaskBtn.innerText = "Update Task";
     //Display form modal with the values of the input fields to be updated.
     taskForm.classList.toggle("hidden");
     /*Lastly to make the editing functional, so it reflect when you submit the task
