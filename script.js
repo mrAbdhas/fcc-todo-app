@@ -26,6 +26,8 @@ let currentTask = {
 
 //Function to add or update the input values to taskData array.
 const addOrUpdateTask = () => {
+    //set button text to Add task.
+    addOrUpdateTaskBtn.innerText = "Add Task";
     //Determine whether the task exist in taskData array
     /* findIndex array method call on taskData finds and returns the index of the first
     element that meets the criteria specified by a provied testing funtion, if not, 
@@ -43,6 +45,8 @@ const addOrUpdateTask = () => {
     if(dataArrIndex === -1) { // the condition, check if dataArrIndex is stricly equals to -1, meaning no matching id.
         //Add taskObj object to the begining of taskData array.
         taskData.unshift(taskObj);
+    } else {
+        taskData[dataArrIndex] = taskObj; // else set a task with the index [dataArrIndex] to taskObj.
     }
 
     //call updateTaskContainer to add task to the DOM. 
@@ -53,7 +57,9 @@ const addOrUpdateTask = () => {
 
 //Fucntion to add the task to the DOM
 const updateTaskContainer = () => {
-    // First clear out existing content of taskContainer before adding new tasks. 
+    
+    /*Fix duplication issue of previous task, when adding tasks,
+    clear out existing content of taskContainer, by setting innerHTML back to an empty string*/ 
     tasksContainer.innerHTML = "";
     //Display the task by looping throught it
     // Use forEach method on taskData, then destructure id, title, date, description as the parameters 
@@ -68,8 +74,8 @@ const updateTaskContainer = () => {
             <p><strong>Date:</strong>${date}</p>
             <p><strong>Description:</strong>${description}</p>
 
-            <button type="button" class="btn">Edit</button>
-            <button type="button" class="btn">Delete</button>
+            <button type="button" class="btn" onclick="editTask(this)">Edit</button>
+            <button type="button" class="btn" onclick="deleteTask(this)">Delete</button>
         </div>
         
         `)
@@ -77,7 +83,39 @@ const updateTaskContainer = () => {
     )
 }
 
+//deleteTask function, that will handle deleting tasks.
+const deleteTask = (buttonEl) => {
+    // find the index of the tasks to be deleted.
+    const dataArrIndex = taskData.findIndex((item) => item.id === buttonEl.parentElement.id);
+    //remove parrentElement of buttonEl from the DOM.
+    buttonEl.parentElement.remove();
+     /*splice is array method, takes up to 3 arguments,
+    1 manadtory arg. specifies which index to start,
+    2nd arg. is number of items to remove
+    3rd is optional replacement element*/
+    //Remove 1 tasks from taskData array.
+    taskData.splice(dataArrIndex, 1);
+}
 
+//editTask function, that will handle editing tasks.
+const editTask = (buttonEl) => {
+    // find the index of the tasks to be edited.
+    const dataArrIndex = taskData.findIndex((item) => item.id === buttonEl.parentElement.id);
+    // Retrive the task to be edited and assign it to currentTask object, to keep track of it.
+    currentTask = taskData[dataArrIndex];
+    /*The task to be edited is now in the currentTask object
+    Stage it, for editing inside input fields.*/
+    titleInput.value = currentTask.title;
+    dateInput.value = currentTask.date;
+    descriptionInput.value = currentTask.description;
+    // Set the Text of addOrUpdateTaskBtn button to "Update Task".
+    addOrUpdateTaskBtn.innerText = "Update Task";
+    //Display form modal with the values of the input fields to be updated.
+    taskForm.classList.toggle("hidden");
+    /*Lastly to make the editing functional, so it reflect when you submit the task
+    create and else block in the if statement inside addOrUpdateTask function
+    and set taskData[dataArrIndex] to taskObj */
+}
 
 //function to clear input fields, after creating a task.
 const reset = () => {
@@ -107,7 +145,9 @@ openTaskFormBtn.addEventListener("click", () => {
 // Event listener for the "Close" X button to display the dialog box on UI.
 closeTaskFormBtn.addEventListener("click", () => {
     const formInputsContainValues = titleInput.value || dateInput.value || descriptionInput.value;
-    if (formInputsContainValues) {  // check if formInputsContainValues is equal to true.
+    //if the the values in the input fields are not equal to/exist in currentTask object, meaning no changes to tasks, return false and save in variable.
+    const formInputValuesUpdated = titleInput.value !== currentTask.title || dateInput.value !== currentTask.date || descriptionInput.value !== currentTask.description;
+    if (formInputsContainValues && formInputValuesUpdated) {  // check if formInputsContainValues or formInputValuesUpdated is equal to true.
         //Display modal dialog box element (confirmCloseDialog) on the UI
         confirmCloseDialog.showModal(); // This dialog contains options to cancel or discard.
     } else { // if the if statement is not true, meaning no changes in input field.
