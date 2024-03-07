@@ -49,6 +49,9 @@ const addOrUpdateTask = () => {
         taskData[dataArrIndex] = taskObj; // else set a task with the index [dataArrIndex] to taskObj.
     }
 
+    //Save to localStorage when user add or updates a task.
+    localStorage.setItem("data", JSON.stringify(taskData));
+
     //call updateTaskContainer to add task to the DOM. 
     updateTaskContainer(); 
     // And afterwards clear inputs and close form modal
