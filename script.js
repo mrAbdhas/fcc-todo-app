@@ -14,10 +14,8 @@ const descriptionInput = document.getElementById("description-input");
 /* 
 Setup an array to store all tasks and their associated data (title, due date, description).
 This storage enables task tracking, display on the UI, and saving to localStorage.
-*/
-const taskData = [
-
-];
+set taskData to retrivel of data from localStorage or empty arrag*/
+const taskData = JSON.parse(localStorage.getItem("data")) || [];
 
 // Setup an object to track the state when editing and discarding tasks.
 let currentTask = {
@@ -48,6 +46,9 @@ const addOrUpdateTask = () => {
     } else {
         taskData[dataArrIndex] = taskObj; // else set a task with the index [dataArrIndex] to taskObj.
     }
+
+    //Save to localStorage when user add or updates a task.
+    localStorage.setItem("data", JSON.stringify(taskData));
 
     //call updateTaskContainer to add task to the DOM. 
     updateTaskContainer(); 
@@ -95,6 +96,11 @@ const deleteTask = (buttonEl) => {
     3rd is optional replacement element*/
     //Remove 1 tasks from taskData array.
     taskData.splice(dataArrIndex, 1);
+    /*splice method is used above to delete the task from taskData array,
+    as per user's instruction, so its redundant to delete it from the localStorage 
+    with .remove() or clear .method().*/
+    // instead we save taskData to LocalStorage again with .setItem() method.
+    localStorage.setItem("data", JSON.stringify(taskData));
 }
 
 //editTask function, that will handle editing tasks.
@@ -134,6 +140,11 @@ const reset = () => {
     };
 
 }
+
+//Check if there is a task inside taskData array, and reflects in UI, at page load.
+if(taskData.length){ // condition checks the length, 0 is falsy. 
+    updateTaskContainer() // if the condition is true, updateTaskContainer function adds tasks to the UI.
+  }
 
 // Event listener for the "Add new Task" button to toggle the visibility of the form modal.
 openTaskFormBtn.addEventListener("click", () => {
