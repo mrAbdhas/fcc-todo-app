@@ -98,6 +98,11 @@ const deleteTask = (buttonEl) => {
     3rd is optional replacement element*/
     //Remove 1 tasks from taskData array.
     taskData.splice(dataArrIndex, 1);
+    /*splice method is used above to delete the task from taskData array,
+    as per user's instruction, so its redundant to delete it from the localStorage 
+    with .remove() or clear .method().*/
+    // instead we save taskData to LocalStorage again with .setItem() method.
+    localStorage.setItem("data", JSON.stringify(taskData));
 }
 
 //editTask function, that will handle editing tasks.
