@@ -14,10 +14,8 @@ const descriptionInput = document.getElementById("description-input");
 /* 
 Setup an array to store all tasks and their associated data (title, due date, description).
 This storage enables task tracking, display on the UI, and saving to localStorage.
-*/
-const taskData = [
-
-];
+set taskData to retrivel of data from localStorage or empty arrag*/
+const taskData = JSON.parse(localStorage.getItem("data")) || [];
 
 // Setup an object to track the state when editing and discarding tasks.
 let currentTask = {
@@ -142,6 +140,11 @@ const reset = () => {
     };
 
 }
+
+//Check if there is a task inside taskData array, and reflects in UI, at page load.
+if(taskData.length){ // condition checks the length, 0 is falsy. 
+    updateTaskContainer() // if the condition is true, updateTaskContainer function adds tasks to the UI.
+  }
 
 // Event listener for the "Add new Task" button to toggle the visibility of the form modal.
 openTaskFormBtn.addEventListener("click", () => {
